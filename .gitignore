@@ -1,0 +1,13 @@
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+logs/
+*.log
+.env
+config.php
+/vendor/
+node_modules/
+*.sql
+*.sqlite
+*.db

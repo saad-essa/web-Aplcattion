@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأماكن السياحية - Socotra Go</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Leaflet CSS for Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/arabic-styles.css">
+</head>
+<body>
+    <!-- Navigation (Same as index.html) -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="assets/images/logo.png" alt="Socotra Go Logo" height="50">
+                <span class="brand-text">Socotra Go</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">الرئيسية</a></li>
+                    <li class="nav-item"><a class="nav-link" href="tours.html">الرحلات</a></li>
+                    <li class="nav-item"><a class="nav-link" href="packages.html">الباقات</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="attractions.html">الأماكن</a></li>
+                    <li class="nav-item"><a class="nav-link" href="reviews.html">آراء العملاء</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">عن الوكالة</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">التواصل</a></li>
+                    <li class="nav-item"><a class="btn btn-outline-light me-2" href="book.html">احجز الآن</a></li>
+                    <li class="nav-item">
+                        <button class="btn btn-sm btn-language" id="langSwitch">EN</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">الأماكن السياحية في سقطرى</h1>
+            <p class="page-subtitle">اكتشف جمال طبيعة سقطرى الفريدة</p>
+        </div>
+    </section>
+
+    <!-- Attractions Filter -->
+    <section class="filter-section py-4 bg-light">
+        <div class="container">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <select class="form-select" id="categoryFilter">
+                        <option value="all">جميع الفئات</option>
+                        <option value="beach">الشواطئ</option>
+                        <option value="mountain">الجبال</option>
+                        <option value="forest">الغابات</option>
+                        <option value="cave">الكهوف</option>
+                        <option value="protected">المحميات</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="searchAttractions" placeholder="ابحث عن مكان سياحي...">
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-primary w-100" id="resetFilter">إعادة التعيين</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Attractions Grid -->
+    <section class="attractions-grid py-5">
+        <div class="container">
+            <div class="row g-4" id="attractionsContainer">
+                <!-- Attraction 1 -->
+                <div class="col-lg-4 col-md-6" data-category="forest">
+                    <div class="attraction-card h-100">
+                        <div class="attraction-image">
+                            <img src="assets/images/a.jpg" class="img-fluid" alt="شجرة دم الأخوين">
+                            <div class="attraction-badge">الأكثر زيارة</div>
+                        </div>
+                        <div class="attraction-content">
+                            <h3 class="attraction-title">شجرة دم الأخوين</h3>
+                            <p class="attraction-description">
+                                شجرة نادرة تنمو فقط في سقطرى، تتميز بمادة حمراء تشبه الدم تستخدم في الطب التقليدي والصبغات.
+                                تعتبر من أقدم الأشجار في العالم.
+                            </p>
+                            <div class="attraction-info">
+                                <div class="info-item">
+                                    <i class="bi bi-geo-alt"></i>
+                                    <span>منطقة فجحة</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="bi bi-clock"></i>
+                                    <span>أفضل وقت: نوفمبر - مارس</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="bi bi-tree"></i>
+                                    <span>غابة محمية</span>
+                                </div>
+                            </div>
+                            <div class="attraction-actions">
+                                <button class="btn btn-outline-primary btn-map" data-lat="12.4856" data-lng="53.3862">
+                                    <i class="bi bi-map"></i> عرض الخريطة
+                                </button>
+                                <a href="tours.html#dragon_blood" class="btn btn-primary">رحلات لهذا الموقع</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attraction 2 -->
+                <div class="col-lg-4 col-md-6" data-category="mountain">
+                    <div class="attraction-card h-100">
+                        <div class="attraction-image">
+                            <img src="assets/images/wadi.jpg" class="img-fluid" alt="وادي دكسم">
+                        </div>
+                        <div class="attraction-content">
+                            <h3 class="attraction-title">وادي دكسم</h3>
+                            <p class="attraction-description">
+                                وادي جبلي خلاب يقع في وسط الجزيرة، يتميز بغابات كثيفة من أشجار دم الأخوين ومناظر طبيعية ساحرة.
+                                يعتبر من أهم المواقع البيئية في سقطرى.
+                            </p>
+                            <div class="attraction-info">
+                                <div class="info-item">
+                                    <i class="bi bi-geo-alt"></i>
+                                    <span>وسط الجزيرة</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="bi bi-arrow-up"></i>
+                                    <span>ارتفاع: 700 متر</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="bi bi-droplet"></i>
+                                    <span>ينابيع ماء عذبة</span>
+                                </div>
+                            </div>
+                            <div class="attraction-actions">
+                                <button class="btn btn-outline-primary btn-map" data-lat="12.5000" data-lng="53.9000">
+                                    <i class="bi bi-map"></i> عرض الخريطة
+                                </button>
+                                <a href="packages.html#5days" class="btn btn-primary">الباقات تشمل هذا الموقع</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attraction 3 -->
+                <div class="col-lg-4 col-md-6" data-category="cave">
+                    <div class="attraction-card h-100">
+                        <div class="attraction-image">
+                            <img src="assets/images/c.jpg" class="img-fluid" alt="كهف حوق">
+                        </div>
+                        <div class="attraction-content">
+                            <h3 class="attraction-title">كهف حوق</h3>
+                            <p class="attraction-description">
+                                كهف أثري ضخم يحتوي على نقوش وكتابات قديمة تعود لحضارات سقطرى التاريخية.
+                                يتميز بتكوينات صخرية طبيعية مذهلة ومناخ معتدل طوال العام.
+                            </p>
+                            <div class="attraction-info">
+                                <div class="info-item">
+                                    <i class="bi bi-geo-alt"></i>
+                                    <span>شرق الجزيرة</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="bi bi-rulers"></i>
+                                    <span>طول الكهف: 3 كم</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="bi bi-history"></i>
+                                    <span>تاريخي أثري</span>
+                                </div>
+                            </div>
+                            <div class="attraction-actions">
+                                <button class="btn btn-outline-primary btn-map" data-lat="12.5833" data-lng="53.7833">
+                                    <i class="bi bi-map"></i> عرض الخريطة
+                                </button>
+                                <a href="tours.html#hoq_cave" class="btn btn-primary">رحلات كهف حوق</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attraction 4 -->
+                <div class="col-lg-4 col-md-6" data-category="beach">
+                    <div class="attraction-card h-100">
+                        <div class="attraction-image">
+                            <img src="assets/images/g.jpg" class="img-fluid" alt="قلنسية">
+                        </div>
+                        <div class="attraction-content">
+                            <h3 class="attraction-title">قلنسية</h3>
+                            <p class="attraction-description">
+                                مدينة ساحلية تقع في أقصى غرب الجزيرة، تشتهر بشواطئها الذهبية ومينائها التقليدي.
+                                تعتبر مركزاً للصيد التقليدي ووجهة لمحبي المغامرات البحرية.
+                            </p>
+                            <div class="attraction-info">
+                                <div class="info-item">
+                                    <i class="bi bi-geo-alt"></i>
+                                    <span>غرب سقطرى</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="bi bi-water"></i>
+                                    <span>مدينة ساحلية</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="bi bi-fish"></i>
+                                    <span>صيد تقليدي</span>
+                                </div>
+                            </div>
+                            <div class="attraction-actions">
+                                <button class="btn btn-outline-primary btn-map" data-lat="12.6895" data-lng="53.4871">
+                                    <i class="bi bi-map"></i> عرض الخريطة
+                                </button>
+                                <a href="tours.html#qalansiya" class="btn btn-primary">رحلات بحرية</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attraction 5 -->
+                <div class="col-lg-4 col-md-6" data-category="protected">
+                    <div class="attraction-card h-100">
+                        <div class="attraction-image">
+                            <img src="assets/images/di.jpg" class="img-fluid" alt="محمية دي حمري">
+                        </div>
+                        <div class="attraction-content">
+                            <h3 class="attraction-title">محمية دي حمري</h3>
+                            <p class="attraction-description">
+                                محمية بحرية طبيعية تتميز بتنوع بيولوجي فريد، تعتبر من أفضل مواقع الغوص والسنوركلينج في سقطرى.
+                                موطن للسلاحف البحرية والدلافين والشعاب المرجانية.
+                            </p>
+                            <div class="attraction-info">
+                                <div class="info-item">
+                                    <i class="bi bi-geo-alt"></i>
+                                    <span>شمال شرق الجزيرة</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="bi bi-water"></i>
+                                    <span>محمية بحرية</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="bi bi-tropical-storm"></i>
+                                    <span>غوص وسنوركلينج</span>
+                                </div>
+                            </div>
+                            <div class="attraction-actions">
+                                <button class="btn btn-outline-primary btn-map" data-lat="12.6500" data-lng="54.0167">
+                                    <i class="bi bi-map"></i> عرض الخريطة
+                                </button>
+                                <a href="packages.html#adventure" class="btn btn-primary">أنشطة بحرية</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attraction 6 -->
+                <div class="col-lg-4 col-md-6" data-category="beach">
+                    <div class="attraction-card h-100">
+                        <div class="attraction-image">
+                            <img src="assets/images/f.jpg" class="img-fluid" alt="شاطئ أرك">
+                        </div>
+                        <div class="attraction-content">
+                            <h3 class="attraction-title">شاطئ أرك</h3>
+                            <p class="attraction-description">
+                                شاطئ منعزل يتميز برمال بيضاء ناعمة ومياه فيروزية صافية، يعد من أفضل الشواطئ للاسترخاء والخصوصية.
+                                مثالي للتخييم تحت النجوم.
+                            </p>
+                            <div class="attraction-info">
+                                <div class="info-item">
+                                    <i class="bi bi-geo-alt"></i>
+                                    <span>جنوب غرب الجزيرة</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="bi bi-umbrella"></i>
+                                    <span>شاطئ منعزل</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="bi bi-stars"></i>
+                                    <span>مثالي للتخييم</span>
+                                </div>
+                            </div>
+                            <div class="attraction-actions">
+                                <button class="btn btn-outline-primary btn-map" data-lat="12.4500" data-lng="53.2500">
+                                    <i class="bi bi-map"></i> عرض الخريطة
+                                </button>
+                                <a href="packages.html#7days" class="btn btn-primary">الباقة المميزة</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Modal -->
+    <div class="modal fade" id="mapModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mapModalLabel">موقع المكان على الخريطة</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="attractionMap" style="height: 400px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Map -->
+    <section class="map-section py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">خريطة الأماكن السياحية في سقطرى</h2>
+            <div id="socotraMap" style="height: 500px; border-radius: 10px;"></div>
+            <div class="map-legend mt-3">
+                <div class="legend-item">
+                    <span class="legend-color" style="background-color: #007bff;"></span>
+                    <span>الشواطئ</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color" style="background-color: #28a745;"></span>
+                    <span>الغابات</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color" style="background-color: #dc3545;"></span>
+                    <span>الكهوف</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color" style="background-color: #ffc107;"></span>
+                    <span>المحميات</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Time to Visit -->
+    <section class="timing-section py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">أفضل الأوقات لزيارة سقطرى</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="timing-card">
+                        <h4><i class="bi bi-sun"></i> الفترة المثالية</h4>
+                        <p>من أكتوبر إلى أبريل: طقس معتدل، أمطار خفيفة، مناسبة لجميع الأنشطة</p>
+                        <div class="timing-details">
+                            <div class="month good">يناير</div>
+                            <div class="month good">فبراير</div>
+                            <div class="month good">مارس</div>
+                            <div class="month good">أبريل</div>
+                            <div class="month average">مايو</div>
+                            <div class="month bad">يونيو</div>
+                            <div class="month bad">يوليو</div>
+                            <div class="month bad">أغسطس</div>
+                            <div class="month average">سبتمبر</div>
+                            <div class="month good">أكتوبر</div>
+                            <div class="month good">نوفمبر</div>
+                            <div class="month good">ديسمبر</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="timing-card">
+                        <h4><i class="bi bi-info-circle"></i> نصائح هامة</h4>
+                        <ul>
+                            <li>تجنب زيارة الجزيرة في الفترة من يونيو إلى أغسطس بسبب الرياح الموسمية</li>
+                            <li>احجز مسبقاً خاصة في المواسم السياحية (نوفمبر - مارس)</li>
+                            <li>احضر ملابس مناسبة للطقس والأنشطة المخطط لها</li>
+                            <li>لا تنسَ كريم واقي الشمس والنظارات الشمسية</li>
+                            <li>احصل على تصريح زيارة من السلطات المختصة</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (Same as index.html) -->
+    <footer class="footer py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="mb-4">Socotra Go</h5>
+                    <p>وكالة سياحية متخصصة في رحلات جزيرة سقطرى، نقدم خدمات سياحية فريدة ومتميزة.</p>
+                    <div class="social-links">
+                        <a href="#" class="me-3"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#" class="me-3"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="me-3"><i class="bi bi-tiktok"></i></a>
+                        <a href="#" class="me-3"><i class="bi bi-facebook"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-6 mb-4">
+                    <h6 class="mb-3">روابط سريعة</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="tours.html">الرحلات</a></li>
+                        <li><a href="packages.html">الباقات</a></li>
+                        <li><a href="attractions.html">الأماكن</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-6 mb-4">
+                    <h6 class="mb-3">المزيد</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="reviews.html">آراء العملاء</a></li>
+                        <li><a href="about.html">عن الوكالة</a></li>
+                        <li><a href="contact.html">التواصل</a></li>
+                        <li><a href="book.html">الحجز</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h6 class="mb-3">اتصل بنا</h6>
+                    <p><i class="bi bi-whatsapp me-2"></i> +967 123 456 789</p>
+                    <p><i class="bi bi-envelope me-2"></i> info@socotrago.com</p>
+                    <p><i class="bi bi-geo-alt me-2"></i> حديبو، سقطرى، اليمن</p>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">© 2024 Socotra Go. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/maps.js"></script>
+    <script src="assets/js/language-switcher.js"></script>
+</body>
+</html>

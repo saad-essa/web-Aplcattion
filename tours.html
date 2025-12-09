@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الرحلات - Socotra Go</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #20c997;
+            --dark-color: #1a3a5f;
+            --light-color: #f8f9fa;
+            --accent-color: #ff6b35;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            padding-top: 80px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        /* تحسين شريط التنقل */
+        .navbar {
+            background: linear-gradient(135deg, var(--dark-color) 0%, #2c5282 100%);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .brand-text {
+            color: white;
+            margin-right: 10px;
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            margin: 0 5px;
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .btn-language {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-language:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* تحسين رأس الصفحة */
+        .page-header {
+            background: linear-gradient(rgba(26, 58, 95, 0.85), rgba(26, 58, 95, 0.9)), 
+                        url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23f8f9fa' fill-opacity='1' d='M0,224L80,213.3C160,203,320,181,480,186.7C640,192,800,224,960,218.7C1120,213,1280,171,1360,149.3L1440,128L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+        }
+        
+        .page-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .page-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* تحسين بطاقات الرحلات */
+        .tour-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            margin-bottom: 40px;
+            border: none;
+        }
+        
+        .tour-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .tour-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .tour-title {
+            font-weight: 700;
+            color: var(--dark-color);
+            font-size: 1.5rem;
+            margin: 0;
+        }
+        
+        .tour-badge {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .tour-description {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .tour-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .detail-item i {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .detail-value {
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+        
+        .tour-includes {
+            margin-bottom: 20px;
+        }
+        
+        .tour-includes h6 {
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+        
+        .tour-includes ul {
+            padding-right: 20px;
+            margin: 0;
+        }
+        
+        .tour-includes li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+        
+        .tour-includes li:before {
+            content: "✓";
+            color: var(--secondary-color);
+            font-weight: bold;
+            position: absolute;
+            right: -20px;
+        }
+        
+        .tour-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 12px 30px;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+        
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+        }
+        
+        .btn-outline-secondary {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            padding: 12px 30px;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+        
+        .btn-outline-secondary:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .tour-card img {
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .tour-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* تحسين بانر الحجز */
+        .booking-banner {
+            background: linear-gradient(135deg, var(--dark-color) 0%, var(--primary-color) 100%);
+            color: white;
+            border-radius: 20px;
+            margin: 80px auto;
+            padding: 60px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .booking-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        
+        .booking-banner h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .booking-banner p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        
+        .booking-banner .btn-light {
+            background-color: white;
+            color: var(--primary-color);
+            padding: 15px 40px;
+            font-weight: 700;
+            border-radius: 10px;
+            border: none;
+            transition: var(--transition);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .booking-banner .btn-light:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* تحسين الفوتر */
+        .footer {
+            background-color: var(--dark-color);
+            color: white;
+            margin-top: 80px;
+        }
+        
+        .footer h5, .footer h6 {
+            color: white;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .footer p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+        }
+        
+        .footer a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer a:hover {
+            color: white;
+            padding-right: 5px;
+        }
+        
+        .footer ul li {
+            margin-bottom: 10px;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        /* قسم التصفية */
+        .filter-section {
+            background-color: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+        
+        .filter-title {
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .filter-btn {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            color: #495057;
+            padding: 8px 20px;
+            border-radius: 25px;
+            margin: 0 5px 10px 0;
+            transition: var(--transition);
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        /* تصميم متجاوب */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.2rem;
+            }
+            
+            .tour-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .tour-badge {
+                margin-top: 10px;
+            }
+            
+            .tour-details {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .tour-actions {
+                flex-direction: column;
+            }
+            
+            .tour-card img {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="assets/images/logo.png" alt="Socotra Go Logo" height="50">
+                <span class="brand-text">Socotra Go</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">الرئيسية</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="tours.html">الرحلات</a></li>
+                    <li class="nav-item"><a class="nav-link" href="packages.html">الباقات</a></li>
+                    <li class="nav-item"><a class="nav-link" href="attractions.html">الأماكن</a></li>
+                    <li class="nav-item"><a class="nav-link" href="reviews.html">آراء العملاء</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">عن الوكالة</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">التواصل</a></li>
+                    <li class="nav-item"><a class="btn btn-outline-light me-2" href="book.html">احجز الآن</a></li>
+                    <li class="nav-item">
+                        <button class="btn btn-sm btn-language" id="langSwitch">EN</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title" data-aos="fade-down">رحلات سقطرى اليومية</h1>
+            <p class="page-subtitle" data-aos="fade-up" data-aos-delay="200">اختر من بين رحلاتنا المميزة واستمتع بتجربة فريدة في جزيرة الأساطير</p>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section" data-aos="fade-up">
+        <div class="container">
+            <h3 class="filter-title">تصفية الرحلات</h3>
+            <div>
+                <button class="filter-btn active" data-filter="all">جميع الرحلات</button>
+                <button class="filter-btn" data-filter="beach">الشواطئ</button>
+                <button class="filter-btn" data-filter="nature">الطبيعة</button>
+                <button class="filter-btn" data-filter="adventure">المغامرة</button>
+                <button class="filter-btn" data-filter="historical">التاريخية</button>
+                <button class="filter-btn" data-filter="popular">الأكثر طلباً</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tours Section -->
+    <section class="tours-section py-5">
+        <div class="container">
+            <!-- Tour 1 -->
+            <div class="tour-card" data-aos="fade-up" data-category="beach popular">
+                <div class="row g-0 align-items-center">
+                    <div class="col-md-4">
+                        <div class="image-container" style="overflow: hidden; height: 100%;">
+                            <img src="assets/images/aiq-beach-tour.jpg" class="img-fluid rounded-start" alt="رحلة شاطئ عيق">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body p-4 p-md-5">
+                            <div class="tour-header">
+                                <h3 class="tour-title">⚡ رحلة شاطئ عيق – يوم كامل</h3>
+                                <span class="tour-badge">الأكثر طلباً</span>
+                            </div>
+                            <p class="tour-description">استمتع بيوم كامل على أحد أجمل شواطئ العالم مع رمال بيضاء ومياه فيروزية تخطف الأنفاس. تجربة استثنائية تجمع بين الاسترخاء والسباحة في مياه نقية مع مشاهدة الحياة البحرية الفريدة.</p>
+                            <div class="tour-details">
+                                <div class="detail-item">
+                                    <i class="bi bi-currency-dollar"></i>
+                                    <span class="detail-label">السعر:</span>
+                                    <span class="detail-value">120$ للشخص</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="bi bi-clock"></i>
+                                    <span class="detail-label">المدة:</span>
+                                    <span class="detail-value">6 ساعات</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="bi bi-calendar"></i>
+                                    <span class="detail-label">التاريخ المتاح:</span>
+                                    <span class="detail-value">يومياً</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="bi bi-people"></i>
+                                    <span class="detail-label">الحجوزات:</span>
+                                    <span class="detail-value">مجموعات صغيرة</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="tour-includes">
+                                        <h6><i class="bi bi-check-circle-fill text-success me-2"></i>يشمل الرحلة:</h6>
+                                        <ul>
+                                            <li>تنقلات من وإلى الفندق</li>
+                                            <li>غداء محلي مميز</li>
+                                            <li>مرشد سياحي متخصص</li>
+                                            <li>معدات السباحة والسنوركل</li>
+                                            <li>مياه ومشروبات طوال الرحلة</li>
+                                            <li>صور تذكارية مجانية</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="tour-schedule mt-3 mt-lg-0">
+                                        <h6><i class="bi bi-clock-history text-primary me-2"></i>البرنامج:</h6>
+                                        <ul class="list-unstyled">
+                                            <li><strong>8:00 صباحاً:</strong> الانطلاق من الفندق</li>
+                                            <li><strong>9:00 صباحاً:</strong> الوصول إلى شاطئ عيق</li>
+                                            <li><strong>12:30 ظهراً:</strong> غداء مميز</li>
+                                            <li><strong>2:00 مساءً:</strong> العودة إلى الفندق</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tour-actions mt-4">
+                                <a href="book.html?tour=aiq_beach" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-calendar-check me-2"></i>احجز الآن
+                                </a>
+                                <a href="#aiq-details" class="btn btn-outline-secondary btn-lg" data-bs-toggle="collapse">
+                                    <i class="bi bi-info-circle me-2"></i>المزيد من التفاصيل
+                                </a>
+                                <button class="btn btn-outline-primary btn-lg" onclick="shareTour('رحلة شاطئ عيق')">
+                                    <i class="bi bi-share me-2"></i>شارك الرحلة
+                                </button>
+                            </div>
+                            <div id="aiq-details" class="collapse mt-4">
+                                <div class="card card-body bg-light">
+                                    <h5>تفاصيل إضافية:</h5>
+                                    <p>رحلة شاطئ عيق تبدأ من الساعة 8:00 صباحاً وتنتهي الساعة 2:00 مساءً. تشمل زيارة إلى القرى المحلية والتعرف على حياة السكان الأصليين. الرحلة مناسبة للعائلات والأفراد وجميع الأعمار. ننصح بإحضار واقي الشمس والنظارات الشمسية.</p>
+                                    <p class="mb-0"><strong>ملاحظة:</strong> يمكن تعديل البرنامج حسب رغبة المجموعة بعد التنسيق مع المرشد.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tour 2 -->
+            <div class="tour-card" data-aos="fade-up" data-aos-delay="100" data-category="nature">
+                <div class="row g-0 align-items-center">
+                    <div class="col-md-4">
+                        <div class="image-container" style="overflow: hidden; height: 100%;">
+                            <img src="assets/images/qa.jpg" class="img-fluid rounded-start" alt="رحلة دم الأخوين">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body p-4 p-md-5">
+                            <div class="tour-header">
+                                <h3 class="tour-title">🌳 رحلة غابة دم الأخوين</h3>
+                                <span class="tour-badge" style="background-color: #28a745;">نباتات فريدة</span>
+                            </div>
+                            <p class="tour-description">اكتشف أشجار دم الأخوين النادرة في محمية طبيعية فريدة من نوعها على مستوى العالم. تجربة تعليمية ترفيهية تقدم لك فرصة التعرف على النظام البيئي الفريد في سقطرى.</p>
+                            <div class="tour-details">
+                                <div class="detail-item">
+                                    <i class="bi bi-currency-dollar"></i>
+                                    <span class="detail-label">السعر:</span>
+                                    <span class="detail-value">90$ للشخص</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="bi bi-clock"></i>
+                                    <span class="detail-label">المدة:</span>
+                                    <span class="detail-value">4 ساعات</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="bi bi-calendar"></i>
+                                    <span class="detail-label">التاريخ المتاح:</span>
+                                    <span class="detail-value">السبت، الإثنين، الأربعاء</span>
+                                </div>
+                            </div>
+                            <div class="tour-includes">
+                                <h6><i class="bi bi-check-circle-fill text-success me-2"></i>يشمل الرحلة:</h6>
+                                <ul>
+                                    <li>تنقلات مريحة بسيارات دفع رباعي</li>
+                                    <li>مرشد سياحي متخصص في النباتات</li>
+                                    <li>وجبة خفيفة مع مشروبات محلية</li>
+                                    <li>زيارة لمصنع العطور التقليدي</li>
+                                    <li>كتيب تعريفي بالنباتات النادرة</li>
+                                    <li>تذكار من منتجات دم الأخوين</li>
+                                </ul>
+                            </div>
+                            <div class="tour-actions mt-4">
+                                <a href="book.html?tour=dragon_blood" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-calendar-check me-2"></i>احجز الآن
+                                </a>
+                                <a href="#dragon-details" class="btn btn-outline-secondary btn-lg" data-bs-toggle="collapse">
+                                    <i class="bi bi-info-circle me-2"></i>المزيد من التفاصيل
+                                </a>
+                            </div>
+                            <div id="dragon-details" class="collapse mt-4">
+                                <div class="card card-body bg-light">
+                                    <h5>معلومات فريدة عن أشجار دم الأخوين:</h5>
+                                    <p>تعد أشجار دم الأخوين (Dracaena cinnabari) من أندر الأشجار في العالم وتوجد فقط في سقطرى. سميت بهذا الاسم بسبب المادة الصمغية الحمراء التي تفرزها والتي تشبه الدم. استخدمت هذه المادة منذ القدم في الطب التقليدي والصباغة.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tour 3 -->
+            <div class="tour-card" data-aos="fade-up" data-aos-delay="200" data-category="historical adventure">
+                <div class="row g-0 align-items-center">
+                    <div class="col-md-4">
+                        <div class="image-container" style="overflow: hidden; height: 100%;">
+                            <img src="assets/c.jpg" class="img-fluid rounded-start" alt="رحلة كهف حوق">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body p-4 p-md-5">
+                            <div class="tour-header">
+                                <h3 class="tour-title">🕳️ رحلة كهف حوق الأثري</h3>
+                                <span class="tour-badge" style="background-color: #6f42c1;">أثري</span>
+                            </div>
+                            <p class="tour-description">استكشف كهف حوق الأثري الذي يحتوي على نقوش وكتابات قديمة تعود لعصور ما قبل التاريخ. مغامرة مثيرة لعشاق التاريخ والآثار في واحد من أهم المواقع الأثرية في الجزيرة.</p>
+                            <div class="tour-details">
+                                <div class="detail-item">
+                                    <i class="bi bi-currency-dollar"></i>
+                                    <span class="detail-label">السعر:</span>
+                                    <span class="detail-value">110$ للشخص</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="bi bi-clock"></i>
+                                    <span class="detail-label">المدة:</span>
+                                    <span class="detail-value">5 ساعات</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="bi bi-calendar"></i>
+                                    <span class="detail-label">التاريخ المتاح:</span>
+                                    <span class="detail-value">الأحد، الثلاثاء، الخميس</span>
+                                </div>
+                            </div>
+                            <div class="tour-includes">
+                                <h6><i class="bi bi-check-circle-fill text-success me-2"></i>يشمل الرحلة:</h6>
+                                <ul>
+                                    <li>تنقلات جبلية بسيارات مجهزة</li>
+                                    <li>مرشد أثري متخصص</li>
+                                    <li>غداء في الموقع مع إطلالة رائعة</li>
+                                    <li>معدات السلامة والإنارة</li>
+                                    <li>صور داخل الكهف</li>
+                                    <li>كتيب تعريفي بالنقوش الأثرية</li>
+                                </ul>
+                            </div>
+                            <div class="tour-actions mt-4">
+                                <a href="book.html?tour=hoq_cave" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-calendar-check me-2"></i>احجز الآن
+                                </a>
+                                <button class="btn btn-outline-primary btn-lg" onclick="shareTour('رحلة كهف حوق الأثري')">
+                                    <i class="bi bi-share me-2"></i>شارك الرحلة
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tour 4 -->
+            <div class="tour-card" data-aos="fade-up" data-aos-delay="300" data-category="beach adventure popular">
+                <div class="row g-0 align-items-center">
+                    <div class="col-md-4">
+                        <div class="image-container" style="overflow: hidden; height: 100%;">
+                            <img src="assets/images/g.jpg" class="img-fluid rounded-start" alt="رحلة قلنسية">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body p-4 p-md-5">
+                            <div class="tour-header">
+                                <h3 class="tour-title">⛵ رحلة قلنسية والشواطئ الذهبية</h3>
+                                <span class="tour-badge" style="background-color: #17a2b8;">شواطئ</span>
+                            </div>
+                            <p class="tour-description">زيارة لمدينة قلنسية الساحلية والاستمتاع بشواطئها الذهبية ومياهها الفيروزية. تتضمن الرحلة رحلة بالقارب لمشاهدة الدلافين وزيارة الجزر الصغيرة المحيطة.</p>
+                            <div class="tour-details">
+                                <div class="detail-item">
+                                    <i class="bi bi-currency-dollar"></i>
+                                    <span class="detail-label">السعر:</span>
+                                    <span class="detail-value">150$ للشخص</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="bi bi-clock"></i>
+                                    <span class="detail-label">المدة:</span>
+                                    <span class="detail-value">8 ساعات</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="bi bi-calendar"></i>
+                                    <span class="detail-label">التاريخ المتاح:</span>
+                                    <span class="detail-value">يومياً</span>
+                                </div>
+                            </div>
+                            <div class="tour-includes">
+                                <h6><i class="bi bi-check-circle-fill text-success me-2"></i>يشمل الرحلة:</h6>
+                                <ul>
+                                    <li>رحلات بالقوارب لمشاهدة الدلافين</li>
+                                    <li>غداء بحري طازج</li>
+                                    <li>مرشد سياحي متخصص</li>
+                                    <li>أنشطة بحرية (سباحة، سنوركل)</li>
+                                    <li>زيارة لسوق السمك المحلي</li>
+                                    <li>تذكار من الحرف اليدوية المحلية</li>
+                                </ul>
+                            </div>
+                            <div class="tour-actions mt-4">
+                                <a href="book.html?tour=qalansiya" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-calendar-check me-2"></i>احجز الآن
+                                </a>
+                                <button class="btn btn-outline-primary btn-lg" onclick="shareTour('رحلة قلنسية والشواطئ الذهبية')">
+                                    <i class="bi bi-share me-2"></i>شارك الرحلة
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Banner -->
+    <section class="booking-banner" data-aos="zoom-in">
+        <div class="container text-center">
+            <h2 class="mb-4">جاهز لتجربة لا تنسى في سقطرى؟</h2>
+            <p class="lead mb-4">احجز رحلتك الآن واستمتع بخصم 10% على الحجوزات المبكرة (قبل 30 يومًا)</p>
+            <a href="book.html" class="btn btn-light btn-lg">
+                <i class="bi bi-lightning-charge-fill me-2"></i>احجز رحلتك الآن
+            </a>
+            <p class="mt-3">لديك أسئلة؟ <a href="contact.html" class="text-white fw-bold">اتصل بنا</a> وسنكون سعداء بمساعدتك</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="mb-4">Socotra Go</h5>
+                    <p>وكالة سياحية متخصصة في رحلات جزيرة سقطرى، نقدم خدمات سياحية فريدة ومتميزة بفريق من المرشدين المحليين ذوي الخبرة.</p>
+                    <div class="social-links">
+                        <a href="#" class="me-3"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#" class="me-3"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="me-3"><i class="bi bi-tiktok"></i></a>
+                        <a href="#" class="me-3"><i class="bi bi-facebook"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-6 mb-4">
+                    <h6 class="mb-3">روابط سريعة</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="tours.html">الرحلات</a></li>
+                        <li><a href="packages.html">الباقات</a></li>
+                        <li><a href="attractions.html">الأماكن</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-6 mb-4">
+                    <h6 class="mb-3">المزيد</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="reviews.html">آراء العملاء</a></li>
+                        <li><a href="about.html">عن الوكالة</a></li>
+                        <li><a href="contact.html">التواصل</a></li>
+                        <li><a href="book.html">الحجز</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h6 class="mb-3">اتصل بنا</h6>
+                    <p><i class="bi bi-whatsapp me-2"></i> +967 123 456 789</p>
+                    <p><i class="bi bi-envelope me-2"></i> info@socotrago.com</p>
+                    <p><i class="bi bi-geo-alt me-2"></i> حديبو، سقطرى، اليمن</p>
+                    <p class="mt-3"><small>نعمل يومياً من الساعة 8 صباحاً حتى 8 مساءً</small></p>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">© 2024 Socotra Go. جميع الحقوق محفوظة. | صمم بحب لسقطرى</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+        
+        // Filter tours functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const tourCards = document.querySelectorAll('.tour-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const filterValue = this.getAttribute('data-filter');
+                    
+                    // Show/hide tour cards based on filter
+                    tourCards.forEach(card => {
+                        if (filterValue === 'all') {
+                            card.style.display = 'block';
+                        } else {
+                            const categories = card.getAttribute('data-category');
+                            if (categories && categories.includes(filterValue)) {
+                                card.style.display = 'block';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        }
+                        
+                        // Add animation for showing cards
+                        if (card.style.display === 'block') {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(20px)';
+                            
+                            setTimeout(() => {
+                                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0)';
+                            }, 100);
+                        }
+                    });
+                });
+            });
+        });
+        
+        // Share tour function
+        function shareTour(tourName) {
+            const shareText = `تفضل بزيارة رحلة ${tourName} في سقطرى مع Socotra Go!`;
+            const shareUrl = window.location.href;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: tourName,
+                    text: shareText,
+                    url: shareUrl,
+                });
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                const fullText = `${shareText} ${shareUrl}`;
+                prompt('انسخ الرابط للمشاركة:', fullText);
+            }
+        }
+        
+        // Language switcher simulation
+        document.getElementById('langSwitch').addEventListener('click', function() {
+            const currentLang = this.textContent;
+            this.textContent = currentLang === 'EN' ? 'AR' : 'EN';
+            alert('سيتم توجيهك إلى النسخة الإنجليزية من الموقع');
+        });
+    </script>
+</body>
+</html>

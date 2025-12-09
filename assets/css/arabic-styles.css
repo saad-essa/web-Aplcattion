@@ -1,0 +1,495 @@
+/* Arabic Specific Styles for Socotra Go */
+
+/* Arabic Font Styling */
+body {
+    font-family: 'Cairo', sans-serif;
+    text-align: right;
+    direction: rtl;
+}
+
+/* Fix for Bootstrap RTL */
+.dropdown-menu {
+    text-align: right;
+    left: auto !important;
+    right: 0 !important;
+}
+
+/* RTL fixes for forms */
+.form-check {
+    padding-right: 1.5em;
+    padding-left: 0;
+}
+
+.form-check-input {
+    margin-right: -1.5em;
+    margin-left: 0;
+}
+
+.form-check-label {
+    padding-right: 0.5em;
+}
+
+/* Navigation RTL fixes */
+.navbar-nav {
+    padding-right: 0;
+}
+
+.nav-link {
+    padding-right: 0.5rem !important;
+    padding-left: 0.5rem !important;
+}
+
+/* List styling for RTL */
+ul, ol {
+    padding-right: 1.5em;
+    padding-left: 0;
+}
+
+/* Timeline RTL fixes */
+.timeline {
+    position: relative;
+    padding-right: 30px;
+}
+
+.timeline:before {
+    right: 15px;
+    left: auto;
+    border-right: 2px solid #007bff;
+    border-left: none;
+}
+
+.timeline-item {
+    padding-right: 30px;
+    padding-left: 0;
+}
+
+.timeline-item:before {
+    right: 0;
+    left: auto;
+    transform: translateX(50%);
+}
+
+/* Accordion RTL fixes */
+.accordion-button {
+    text-align: right;
+    padding-right: 1.25rem;
+    padding-left: 1.25rem;
+}
+
+.accordion-button:after {
+    margin-right: auto;
+    margin-left: 0;
+    transform: rotate(180deg);
+}
+
+.accordion-button:not(.collapsed):after {
+    transform: rotate(90deg);
+}
+
+/* Modal RTL fixes */
+.modal-header .btn-close {
+    margin: -0.5rem auto -0.5rem -0.5rem;
+}
+
+/* Table RTL fixes */
+.table th {
+    text-align: right;
+}
+
+/* Form select arrow RTL fix */
+.form-select {
+    background-position: left 0.75rem center;
+}
+
+/* Step indicator RTL */
+.step-line {
+    right: 50%;
+    left: auto;
+}
+
+/* Rating stars RTL */
+.rating-input {
+    direction: ltr;
+    text-align: right;
+}
+
+/* Map controls RTL */
+.leaflet-control-container .leaflet-control {
+    direction: ltr;
+}
+
+/* Social media icons */
+.social-links {
+    direction: ltr;
+}
+
+/* Price display */
+.price {
+    direction: ltr;
+    display: inline-block;
+}
+
+/* Date inputs */
+input[type="date"] {
+    direction: ltr;
+}
+
+/* Number inputs */
+input[type="number"] {
+    direction: ltr;
+}
+
+/* Time display */
+.timing-details .month {
+    float: right;
+    margin-left: 5px;
+    margin-right: 0;
+}
+
+/* Arabic quotation marks */
+.arabic-quote {
+    quotes: "«" "»" "‹" "›";
+}
+
+.arabic-quote:before {
+    content: open-quote;
+}
+
+.arabic-quote:after {
+    content: close-quote;
+}
+
+/* Arabic numerals */
+.arabic-numerals {
+    font-family: 'Cairo', sans-serif;
+}
+
+/* Calendar RTL */
+.calendar {
+    direction: rtl;
+}
+
+.calendar .day-names,
+.calendar .days {
+    float: right;
+}
+
+/* Progress bars RTL */
+.progress {
+    direction: ltr;
+}
+
+/* Breadcrumb RTL */
+.breadcrumb {
+    direction: rtl;
+}
+
+.breadcrumb-item + .breadcrumb-item {
+    padding-right: 0.5rem;
+    padding-left: 0;
+}
+
+.breadcrumb-item + .breadcrumb-item:before {
+    float: right;
+    padding-right: 0;
+    padding-left: 0.5rem;
+    transform: rotate(180deg);
+}
+
+/* Pagination RTL */
+.pagination {
+    direction: ltr;
+    justify-content: flex-end;
+}
+
+/* Tooltip RTL */
+.tooltip {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Popover RTL */
+.popover {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Toast RTL */
+.toast {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Badge positions */
+.badge {
+    left: 0;
+    right: auto;
+}
+
+/* Icon spacing */
+.bi {
+    vertical-align: middle;
+}
+
+/* Button icons */
+.btn i {
+    margin-right: 0;
+    margin-left: 5px;
+}
+
+/* Form group icons */
+.input-group-text {
+    border-left: 0;
+    border-right: 1px solid #ced4da;
+}
+
+.input-group .form-control {
+    border-right: 0;
+    border-left: 1px solid #ced4da;
+}
+
+/* Card image overlay */
+.card-img-overlay {
+    text-align: right;
+}
+
+/* Alert icons */
+.alert i {
+    margin-right: 0;
+    margin-left: 10px;
+}
+
+/* List group RTL */
+.list-group {
+    padding-right: 0;
+}
+
+/* Dropdown RTL fixes */
+.dropdown-menu-end {
+    right: auto !important;
+    left: 0 !important;
+}
+
+/* Carousel RTL */
+.carousel-control-prev,
+.carousel-control-next {
+    direction: ltr;
+}
+
+/* Offcanvas RTL */
+.offcanvas {
+    direction: rtl;
+    text-align: right;
+}
+
+.offcanvas-header .btn-close {
+    margin: -0.5rem auto -0.5rem -0.5rem;
+}
+
+/* Arabic text utilities */
+.text-arabic {
+    font-family: 'Cairo', sans-serif;
+    line-height: 1.8;
+}
+
+.text-arabic-sm {
+    font-size: 0.9rem;
+}
+
+.text-arabic-lg {
+    font-size: 1.2rem;
+}
+
+/* Arabic poetry style */
+.poetry {
+    line-height: 2;
+    font-style: italic;
+    text-align: center;
+}
+
+/* Quranic text style */
+.quranic {
+    font-family: 'Cairo', sans-serif;
+    font-weight: 600;
+    color: #2c3e50;
+    line-height: 2;
+}
+
+/* Arabic calligraphy effect */
+.calligraphy {
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Date and time RTL */
+.datetime {
+    direction: ltr;
+    display: inline-block;
+}
+
+/* Phone number RTL */
+.phone-number {
+    direction: ltr;
+    display: inline-block;
+}
+
+/* Email RTL */
+.email-address {
+    direction: ltr;
+    display: inline-block;
+}
+
+/* URL RTL */
+.url {
+    direction: ltr;
+    display: inline-block;
+    word-break: break-all;
+}
+
+/* Arabic section titles */
+.section-title-ar {
+    border-right: 4px solid var(--secondary-color);
+    padding-right: 15px;
+    border-left: none;
+    padding-left: 0;
+}
+
+/* Arabic blockquote */
+blockquote.ar {
+    border-right: 4px solid var(--secondary-color);
+    padding-right: 20px;
+    border-left: none;
+    padding-left: 0;
+    font-style: italic;
+    color: #555;
+}
+
+/* Arabic code blocks */
+code.ar {
+    direction: ltr;
+    text-align: left;
+    font-family: 'Courier New', monospace;
+}
+
+/* Arabic preformatted text */
+pre.ar {
+    direction: ltr;
+    text-align: left;
+}
+
+/* Arabic keyboard input */
+kbd.ar {
+    direction: ltr;
+    font-family: monospace;
+}
+
+/* Arabic mark text */
+mark.ar {
+    background-color: #fff3cd;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+/* Arabic small text */
+small.ar {
+    font-size: 0.875em;
+}
+
+/* Arabic abbreviations */
+abbr[title].ar {
+    text-decoration: none;
+    border-bottom: 1px dotted #666;
+    cursor: help;
+}
+
+/* Arabic definitions */
+dfn.ar {
+    font-style: italic;
+}
+
+/* Arabic variable */
+var.ar {
+    font-style: italic;
+}
+
+/* Arabic sample output */
+samp.ar {
+    font-family: monospace;
+}
+
+/* Responsive RTL fixes */
+@media (max-width: 768px) {
+    .navbar-collapse {
+        text-align: right;
+    }
+    
+    .dropdown-menu {
+        position: static;
+        float: none;
+        width: 100%;
+    }
+    
+    .timeline {
+        padding-right: 20px;
+    }
+    
+    .timeline:before {
+        right: 10px;
+    }
+    
+    .timeline-item {
+        padding-right: 20px;
+    }
+}
+
+/* Print RTL styles */
+@media print {
+    body {
+        direction: rtl;
+        text-align: right;
+    }
+    
+    .section-title-ar {
+        border-right: 2px solid #000;
+        border-left: none;
+    }
+    
+    blockquote.ar {
+        border-right: 2px solid #000;
+        border-left: none;
+    }
+}
+
+/* High contrast mode for accessibility */
+@media (prefers-contrast: high) {
+    .nav-link {
+        text-decoration: underline;
+    }
+    
+    .btn {
+        border-width: 2px;
+    }
+    
+    .form-control {
+        border-width: 2px;
+    }
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .card,
+    .feature-card,
+    .team-card,
+    .attraction-card,
+    .review-card,
+    .contact-info-card {
+        transition: none !important;
+    }
+}

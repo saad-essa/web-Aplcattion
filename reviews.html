@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آراء العملاء - Socotra Go</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #198754;
+            --accent-color: #fd7e14;
+            --light-bg: #f8f9fa;
+            --dark-bg: #212529;
+            --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            --hover-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #fefefe;
+            color: #333;
+            padding-top: 76px;
+        }
+        
+        /* تحسين التصميم العام */
+        .page-header {
+            background: linear-gradient(135deg, rgba(13, 110, 253, 0.9) 0%, rgba(25, 135, 84, 0.85) 100%), url('assets/images/reviews-bg.jpg') center/cover;
+            color: white;
+            padding: 100px 0 70px;
+            text-align: center;
+            margin-bottom: 0;
+            position: relative;
+        }
+        
+        .page-header::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to top, #fefefe, transparent);
+        }
+        
+        .page-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        .page-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* تحسين قسم التقييم العام */
+        .overall-rating {
+            background: linear-gradient(to right, #f8f9fa, #e9ecef);
+            padding: 70px 0;
+            border-radius: 0 0 30px 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .rating-box {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+        
+        .rating-box:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+            border-color: rgba(13, 110, 253, 0.2);
+        }
+        
+        .rating-number {
+            font-size: 4.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+        
+        .rating-box .stars {
+            font-size: 1.8rem;
+            color: #ffc107;
+            margin-bottom: 15px;
+            letter-spacing: -5px;
+        }
+        
+        .rating-text {
+            font-size: 1.1rem;
+            color: #666;
+        }
+        
+        .rating-bars {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--card-shadow);
+            height: 100%;
+        }
+        
+        .rating-bar-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .rating-bar-item span:first-child {
+            width: 80px;
+            font-weight: 600;
+        }
+        
+        .rating-bar-item .progress {
+            flex-grow: 1;
+            height: 12px;
+            margin: 0 15px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .rating-bar-item span:last-child {
+            width: 100px;
+            text-align: left;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        /* تحسين بطاقات التقييم */
+        .review-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            border: 1px solid #f0f0f0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .review-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--hover-shadow);
+            border-color: rgba(13, 110, 253, 0.15);
+        }
+        
+        .review-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to left, var(--primary-color), var(--secondary-color));
+        }
+        
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        .reviewer-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .reviewer-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #f0f0f0;
+            margin-left: 15px;
+        }
+        
+        .reviewer-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .review-date {
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        .review-rating {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 193, 7, 0.1);
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+        
+        .review-rating i {
+            color: #ffc107;
+            font-size: 1rem;
+            margin-left: 2px;
+        }
+        
+        .review-rating .rating-text {
+            font-weight: 700;
+            margin-right: 5px;
+            color: #333;
+        }
+        
+        .review-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .review-text {
+            color: #555;
+            line-height: 1.7;
+            flex-grow: 1;
+            margin-bottom: 20px;
+        }
+        
+        .review-images {
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .review-images img {
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .review-images img:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+        
+        .review-footer {
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .review-trip {
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            color: var(--secondary-color);
+        }
+        
+        .review-trip i {
+            margin-left: 8px;
+            font-size: 1.1rem;
+        }
+        
+        /* تحسين مقاطع الفيديو */
+        .video-review-card {
+            transition: var(--transition);
+        }
+        
+        .video-review-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .video-wrapper {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .video-wrapper img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .video-wrapper:hover img {
+            filter: brightness(0.9);
+        }
+        
+        .video-play-btn {
+            position: absolute;
+            top: 50%;
+            right: 50%;
+            transform: translate(50%, -50%);
+            background: rgba(255, 255, 255, 0.9);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .video-play-btn:hover {
+            background: white;
+            color: var(--secondary-color);
+            transform: translate(50%, -50%) scale(1.1);
+        }
+        
+        .video-info {
+            padding: 0 10px;
+        }
+        
+        .video-info h6 {
+            font-weight: 700;
+            margin-top: 15px;
+            color: #333;
+        }
+        
+        .video-info p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        /* تحسين قسم إضافة التقييم */
+        .add-review-cta {
+            background: linear-gradient(135deg, rgba(13, 110, 253, 0.05) 0%, rgba(25, 135, 84, 0.05) 100%);
+            border-radius: 25px;
+            border: 2px dashed #ced4da;
+            transition: var(--transition);
+        }
+        
+        .add-review-cta:hover {
+            border-color: var(--primary-color);
+            background: linear-gradient(135deg, rgba(13, 110, 253, 0.08) 0%, rgba(25, 135, 84, 0.08) 100%);
+        }
+        
+        .add-review-cta h3 {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        
+        .add-review-cta .btn {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: var(--transition);
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border: none;
+            box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+        }
+        
+        .add-review-cta .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(13, 110, 253, 0.4);
+        }
+        
+        /* تحسين الشارات */
+        .trust-badges {
+            background-color: #f8f9fa;
+            border-radius: 30px 30px 0 0;
+            padding: 70px 0;
+            margin-top: 50px;
+        }
+        
+        .trust-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 15px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            height: 100%;
+        }
+        
+        .trust-badge:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--hover-shadow);
+        }
+        
+        .trust-badge img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+        
+        .trust-badge span {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        /* تحسين المودال */
+        .modal-content {
+            border-radius: 20px;
+            overflow: hidden;
+            border: none;
+        }
+        
+        .modal-header {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+        }
+        
+        .modal-title {
+            font-weight: 700;
+        }
+        
+        .rating-input {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+        
+        .rating-input i {
+            color: #ddd;
+            margin-left: 10px;
+            transition: color 0.2s;
+        }
+        
+        .rating-input i:hover,
+        .rating-input i:hover ~ i,
+        .rating-input i.active {
+            color: #ffc107;
+        }
+        
+        /* تحسين العناوين */
+        .section-title {
+            font-weight: 800;
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100px;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 10px;
+        }
+        
+        .section-title.text-center::after {
+            right: 50%;
+            transform: translateX(50%);
+        }
+        
+        /* تحسين شريط التقدم */
+        .progress-bar {
+            border-radius: 10px;
+        }
+        
+        /* تحسين التجاوب */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .page-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .rating-number {
+                font-size: 3.5rem;
+            }
+            
+            .rating-bar-item {
+                flex-wrap: wrap;
+            }
+            
+            .rating-bar-item .progress {
+                width: 100%;
+                margin: 10px 0;
+            }
+            
+            .rating-bar-item span:first-child,
+            .rating-bar-item span:last-child {
+                width: auto;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .review-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .review-rating {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation (Same as index.html) -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: rgba(13, 110, 253, 0.95); backdrop-filter: blur(10px);">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="assets/images/logo.png" alt="Socotra Go Logo" height="50">
+                <span class="brand-text" style="font-weight: 700;">Socotra Go</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">الرئيسية</a></li>
+                    <li class="nav-item"><a class="nav-link" href="tours.html">الرحلات</a></li>
+                    <li class="nav-item"><a class="nav-link" href="packages.html">الباقات</a></li>
+                    <li class="nav-item"><a class="nav-link" href="attractions.html">الأماكن</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="reviews.html">آراء العملاء</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">عن الوكالة</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">التواصل</a></li>
+                    <li class="nav-item"><a class="btn btn-outline-light me-2" href="book.html">احجز الآن</a></li>
+                    <li class="nav-item">
+                        <button class="btn btn-sm btn-language" id="langSwitch" style="background: white; color: var(--primary-color); font-weight: 600;">EN</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">آراء وتجارب عملائنا</h1>
+            <p class="page-subtitle">تعرف على تجارب السابقين في رحلات سقطرى واستمتع بذكرياتهم المصورة</p>
+        </div>
+    </section>
+
+    <!-- Overall Rating -->
+    <section class="overall-rating">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4 text-center mb-4 mb-md-0">
+                    <div class="rating-box">
+                        <div class="rating-number">4.8</div>
+                        <div class="stars">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-half"></i>
+                        </div>
+                        <p class="rating-text">تقييم عام من 257 عميل</p>
+                        <div class="mt-3">
+                            <span class="badge bg-success" style="font-size: 1rem; padding: 8px 15px;">موصى به بشدة</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="rating-bars">
+                        <h4 class="mb-4" style="font-weight: 700; color: #333;">تفاصيل التقييمات</h4>
+                        <div class="rating-bar-item">
+                            <span>5 نجوم</span>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" style="width: 85%"></div>
+                            </div>
+                            <span>85% (219 عميل)</span>
+                        </div>
+                        <div class="rating-bar-item">
+                            <span>4 نجوم</span>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" style="width: 10%"></div>
+                            </div>
+                            <span>10% (26 عميل)</span>
+                        </div>
+                        <div class="rating-bar-item">
+                            <span>3 نجوم</span>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" style="width: 3%"></div>
+                            </div>
+                            <span>3% (8 عملاء)</span>
+                        </div>
+                        <div class="rating-bar-item">
+                            <span>2 نجوم</span>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" style="width: 1%"></div>
+                            </div>
+                            <span>1% (3 عملاء)</span>
+                        </div>
+                        <div class="rating-bar-item">
+                            <span>1 نجم</span>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" style="width: 1%"></div>
+                            </div>
+                            <span>1% (1 عميل)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Grid -->
+    <section class="reviews-grid py-5">
+        <div class="container">
+            <h3 class="section-title text-center mb-5">آراء وتجارب العملاء</h3>
+            
+            <!-- تصفية حسب التقييم -->
+            <div class="rating-filter mb-5">
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <button class="btn btn-outline-primary active filter-btn" data-filter="all">الكل</button>
+                    <button class="btn btn-outline-primary filter-btn" data-filter="5">
+                        <i class="bi bi-star-fill"></i> 5 نجوم
+                    </button>
+                    <button class="btn btn-outline-primary filter-btn" data-filter="4">
+                        <i class="bi bi-star-fill"></i> 4 نجوم فأكثر
+                    </button>
+                    <button class="btn btn-outline-primary filter-btn" data-filter="with-images">
+                        <i class="bi bi-images"></i> مع صور
+                    </button>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <!-- Review 1 -->
+                <div class="col-lg-4 col-md-6 review-item" data-rating="5" data-images="true">
+                    <div class="review-card h-100">
+                        <div class="review-header">
+                            <div class="reviewer-info">
+                                <img src="assets/images/a.jpg" alt="محمد العبدلي" class="reviewer-avatar">
+                                <div>
+                                    <h5 class="reviewer-name">محمد العبدلي</h5>
+                                    <div class="review-date">ديسمبر 2023</div>
+                                </div>
+                            </div>
+                            <div class="review-rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <span class="rating-text">5.0</span>
+                            </div>
+                        </div>
+                        <div class="review-body">
+                            <h6 class="review-title">تجربة لا تنسى في جزيرة العجائب</h6>
+                            <p class="review-text">
+                                رحلة مذهلة مع فريق Socotra Go المحترف. كانت كل التفاصيل منظمة بشكل رائع، 
+                                المرشد السياحي كان خبيراً ومتعاوناً، والإقامة كانت مريحة والوجبات لذيذة.
+                                شاطئ عيق كان أجمل مما توقعنا!
+                            </p>
+                        </div>
+                        <div class="review-images">
+                            <div class="row g-2">
+                                <div class="col-4">
+                                    <img src="assets/images/b.jpg" alt="صورة من الرحلة" class="img-fluid rounded">
+                                </div>
+                                <div class="col-4">
+                                    <img src="assets/images/e.jpg" alt="صورة من الرحلة" class="img-fluid rounded">
+                                </div>
+                                <div class="col-4">
+                                    <img src="assets/images/c.jpg" alt="صورة من الرحلة" class="img-fluid rounded">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="review-footer">
+                            <div class="review-trip">
+                                <i class="bi bi-suitcase"></i>
+                                <span>باقة 5 أيام - Discover Socotra</span>
+                            </div>
+                            <i class="bi bi-share" style="color: #888; cursor: pointer;"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="col-lg-4 col-md-6 review-item" data-rating="5" data-images="true">
+                    <div class="review-card h-100">
+                        <div class="review-header">
+                            <div class="reviewer-info">
+                                <img src="assets/images/avatar2.jpg" alt="سارة القاسمي" class="reviewer-avatar">
+                                <div>
+                                    <h5 class="reviewer-name">سارة القاسمي</h5>
+                                    <div class="review-date">نوفمبر 2023</div>
+                                </div>
+                            </div>
+                            <div class="review-rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <span class="rating-text">5.0</span>
+                            </div>
+                        </div>
+                        <div class="review-body">
+                            <h6 class="review-title">رحلة عائلية ناجحة</h6>
+                            <p class="review-text">
+                                سافرت مع عائلتي المكونة من 6 أشخاص وكانت الرحلة رائعة. 
+                                فريق Socotra Go تعامل مع احتياجات الأطفال بشكل ممتاز.
+                                الأماكن كانت آمنة والمواصلات مريحة. أنصح بشدة باختيارهم لرحلات سقطرى.
+                            </p>
+                        </div>
+                        <div class="review-images">
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <img src="assets/images/review2-1.jpg" alt="صورة عائلية" class="img-fluid rounded">
+                                </div>
+                                <div class="col-6">
+                                    <img src="assets/images/review2-2.jpg" alt="صورة مع المرشد" class="img-fluid rounded">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="review-footer">
+                            <div class="review-trip">
+                                <i class="bi bi-suitcase"></i>
+                                <span>باقة 7 أيام - Socotra Experience</span>
+                            </div>
+                            <i class="bi bi-share" style="color: #888; cursor: pointer;"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="col-lg-4 col-md-6 review-item" data-rating="4.5" data-images="true">
+                    <div class="review-card h-100">
+                        <div class="review-header">
+                            <div class="reviewer-info">
+                                <img src="assets/images/avatar3.jpg" alt="أحمد التركي" class="reviewer-avatar">
+                                <div>
+                                    <h5 class="reviewer-name">أحمد التركي</h5>
+                                    <div class="review-date">أكتوبر 2023</div>
+                                </div>
+                            </div>
+                            <div class="review-rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-half"></i>
+                                <span class="rating-text">4.5</span>
+                            </div>
+                        </div>
+                        <div class="review-body">
+                            <h6 class="review-title">مغامرة لا تصدق</h6>
+                            <p class="review-text">
+                                اخترت باقة المغامرين وكانت تجربة فريدة. تسلق الجبال، التخييم تحت النجوم، 
+                                والغوص في المياه الفيروزية. الفريق كان محترفاً جداً والأمان كان أولوية.
+                                فقط وجدت الإقامة بسيطة بعض الشيء لكنها كانت مناسبة للمغامرة.
+                            </p>
+                        </div>
+                        <div class="review-images">
+                            <div class="row g-2">
+                                <div class="col-12">
+                                    <img src="assets/images/review3-1.jpg" alt="مغامرة التسلق" class="img-fluid rounded">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="review-footer">
+                            <div class="review-trip">
+                                <i class="bi bi-suitcase"></i>
+                                <span>باقة المغامرين - Adventure Package</span>
+                            </div>
+                            <i class="bi bi-share" style="color: #888; cursor: pointer;"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 4 -->
+                <div class="col-lg-4 col-md-6 review-item" data-rating="5" data-images="true">
+                    <div class="review-card h-100">
+                        <div class="review-header">
+                            <div class="reviewer-info">
+                                <img src="assets/images/avatar4.jpg" alt="فاطمة البحرانية" class="reviewer-avatar">
+                                <div>
+                                    <h5 class="reviewer-name">فاطمة البحرانية</h5>
+                                    <div class="review-date">سبتمبر 2023</div>
+                                </div>
+                            </div>
+                            <div class="review-rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <span class="rating-text">5.0</span>
+                            </div>
+                        </div>
+                        <div class="review-body">
+                            <h6 class="review-title">رحلة تصوير ساحرة</h6>
+                            <p class="review-text">
+                                كمصورة محترفة، كنت أبحث عن أماكن فريدة للتصوير. سقطرى مع Socotra Go 
+                                كانت الحلم الذي تحقق. كل موقع كان أكثر إثارة من الآخر. 
+                                الفريق ساعدني في الوصول لأفضل زوايا التصوير وكانوا متعاونين جداً.
+                            </p>
+                        </div>
+                        <div class="review-images">
+                            <div class="row g-2">
+                                <div class="col-4">
+                                    <img src="assets/images/review4-1.jpg" alt="صورة تصوير" class="img-fluid rounded">
+                                </div>
+                                <div class="col-4">
+                                    <img src="assets/images/review4-2.jpg" alt="صورة طبيعة" class="img-fluid rounded">
+                                </div>
+                                <div class="col-4">
+                                    <img src="assets/images/review4-3.jpg" alt="صورة شروق" class="img-fluid rounded">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="review-footer">
+                            <div class="review-trip">
+                                <i class="bi bi-suitcase"></i>
+                                <span>رحلة مخصصة للتصوير</span>
+                            </div>
+                            <i class="bi bi-share" style="color: #888; cursor: pointer;"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 5 -->
+                <div class="col-lg-4 col-md-6 review-item" data-rating="4" data-images="false">
+                    <div class="review-card h-100">
+                        <div class="review-header">
+                            <div class="reviewer-info">
+                                <img src="assets/images/avatar5.jpg" alt="خالد السعدي" class="reviewer-avatar">
+                                <div>
+                                    <h5 class="reviewer-name">خالد السعدي</h5>
+                                    <div class="review-date">أغسطس 2023</div>
+                                </div>
+                            </div>
+                            <div class="review-rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star"></i>
+                                <span class="rating-text">4.0</span>
+                            </div>
+                        </div>
+                        <div class="review-body">
+                            <h6 class="review-title">تجربة جيدة مع بعض الملاحظات</h6>
+                            <p class="review-text">
+                                الرحلة بشكل عام كانت جيدة، الأماكن جميلة والمرشد ممتاز. 
+                                لكن واجهتنا مشكلة صغيرة في تنظيم مواعيد التنقلات بين المواقع.
+                                التواصل مع الفريق كان سريعاً لحل المشكلة. أنصح بالحجز المبكر.
+                            </p>
+                        </div>
+                        <div class="review-footer">
+                            <div class="review-trip">
+                                <i class="bi bi-suitcase"></i>
+                                <span>رحلة شاطئ عيق + كهف حوق</span>
+                            </div>
+                            <i class="bi bi-share" style="color: #888; cursor: pointer;"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 6 -->
+                <div class="col-lg-4 col-md-6 review-item" data-rating="5" data-images="true">
+                    <div class="review-card h-100">
+                        <div class="review-header">
+                            <div class="reviewer-info">
+                                <img src="assets/images/avatar6.jpg" alt="نورة العتيبي" class="reviewer-avatar">
+                                <div>
+                                    <h5 class="reviewer-name">نورة العتيبي</h5>
+                                    <div class="review-date">يوليو 2023</div>
+                                </div>
+                            </div>
+                            <div class="review-rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <span class="rating-text">5.0</span>
+                            </div>
+                        </div>
+                        <div class="review-body">
+                            <h6 class="review-title">أجمل إجازة في حياتي</h6>
+                            <p class="review-text">
+                                لا أملك كلمات لوصف جمال الرحلة. من التنظيم الرائع إلى الاهتمام بكل التفاصيل الصغيرة.
+                                كانت أول زيارة لي لسقطرى ولن تكون الأخيرة. شكراً لفريق Socotra Go على هذه الذكريات الجميلة.
+                                أوصي كل أصدقائي بالسفر معهم.
+                            </p>
+                        </div>
+                        <div class="review-images">
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <img src="assets/images/review6-1.jpg" alt="ذكريات" class="img-fluid rounded">
+                                </div>
+                                <div class="col-6">
+                                    <img src="assets/images/review6-2.jpg" alt="شاطئ" class="img-fluid rounded">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="review-footer">
+                            <div class="review-trip">
+                                <i class="bi bi-suitcase"></i>
+                                <span>باقة 5 أيام - Discover Socotra</span>
+                            </div>
+                            <i class="bi bi-share" style="color: #888; cursor: pointer;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- أزرار التبديل بين الصفحات -->
+            <div class="pagination-container mt-5 text-center">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">السابق</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">التالي</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- Video Reviews -->
+            <div class="video-reviews mt-5">
+                <h3 class="section-title text-center mb-5">مقاطع فيديو من تجارب عملائنا</h3>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="video-review-card">
+                            <div class="video-wrapper">
+                                <img src="assets/images/video-thumb1.jpg" alt="فيديو تجربة" class="img-fluid rounded">
+                                <button class="video-play-btn" data-bs-toggle="modal" data-bs-target="#videoModal1">
+                                    <i class="bi bi-play-circle"></i>
+                                </button>
+                            </div>
+                            <div class="video-info mt-3">
+                                <h6>رحلة شاطئ عيق - ديسمبر 2023</h6>
+                                <p>محمد وأصدقاؤه يشاركون تجربتهم</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="video-review-card">
+                            <div class="video-wrapper">
+                                <img src="assets/images/video-thumb2.jpg" alt="فيديو تجربة" class="img-fluid rounded">
+                                <button class="video-play-btn" data-bs-toggle="modal" data-bs-target="#videoModal2">
+                                    <i class="bi bi-play-circle"></i>
+                                </button>
+                            </div>
+                            <div class="video-info mt-3">
+                                <h6>تسلق جبال سقطرى - نوفمبر 2023</h6>
+                                <p>مغامرة فريق المغامرين</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="video-review-card">
+                            <div class="video-wrapper">
+                                <img src="assets/images/video-thumb3.jpg" alt="فيديو تجربة" class="img-fluid rounded">
+                                <button class="video-play-btn" data-bs-toggle="modal" data-bs-target="#videoModal3">
+                                    <i class="bi bi-play-circle"></i>
+                                </button>
+                            </div>
+                            <div class="video-info mt-3">
+                                <h6>رحلة عائلية إلى قلنسية - أكتوبر 2023</h6>
+                                <p>تجربة عائلة القاسمي</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Modals -->
+            <div class="modal fade" id="videoModal1" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">رحلة شاطئ عيق - ديسمبر 2023</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="ratio ratio-16x9">
+                                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Review CTA -->
+            <div class="add-review-cta text-center mt-5 p-5 rounded">
+                <h3 class="mb-3">شاركنا تجربتك مع Socotra Go</h3>
+                <p class="mb-4" style="font-size: 1.1rem; color: #666;">ساعد الآخرين في اختيار رحلتهم المثالية إلى سقطرى</p>
+                <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#addReviewModal">
+                    <i class="bi bi-pencil"></i> اكتب رأيك وتجربتك
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add Review Modal -->
+    <div class="modal fade" id="addReviewModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">أضف رأيك وتجربتك</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addReviewForm">
+                        <div class="mb-3">
+                            <label class="form-label">تقييمك</label>
+                            <div class="rating-input">
+                                <i class="bi bi-star" data-rating="1"></i>
+                                <i class="bi bi-star" data-rating="2"></i>
+                                <i class="bi bi-star" data-rating="3"></i>
+                                <i class="bi bi-star" data-rating="4"></i>
+                                <i class="bi bi-star" data-rating="5"></i>
+                            </div>
+                            <input type="hidden" id="userRating" name="rating" value="0">
+                        </div>
+                        <div class="mb-3">
+                            <label for="reviewerName" class="form-label">اسمك</label>
+                            <input type="text" class="form-control" id="reviewerName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="reviewTitle" class="form-label">عنوان الرأي</label>
+                            <input type="text" class="form-control" id="reviewTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="reviewText" class="form-label">رأيك وتجربتك</label>
+                            <textarea class="form-control" id="reviewText" rows="4" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="reviewTrip" class="form-label">الباقة أو الرحلة التي اخترتها</label>
+                            <select class="form-select" id="reviewTrip">
+                                <option value="">اختر...</option>
+                                <option value="5days">باقة 5 أيام</option>
+                                <option value="7days">باقة 7 أيام</option>
+                                <option value="adventure">باقة المغامرين</option>
+                                <option value="aiq_beach">رحلة شاطئ عيق</option>
+                                <option value="other">رحلة أخرى</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">صور من رحلتك (اختياري)</label>
+                            <input type="file" class="form-control" multiple accept="image/*">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100" style="padding: 12px; font-size: 1.1rem; font-weight: 600;">إرسال الرأي</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trust Badges -->
+    <section class="trust-badges">
+        <div class="container">
+            <h3 class="section-title text-center mb-5">يثق بنا العملاء من</h3>
+            <div class="row g-4 text-center">
+                <div class="col-md-2 col-4">
+                    <div class="trust-badge">
+                        <img src="assets/images/flag-ksa.png" alt="السعودية" class="img-fluid">
+                        <span>السعودية</span>
+                    </div>
+                </div>
+                <div class="col-md-2 col-4">
+                    <div class="trust-badge">
+                        <img src="assets/images/flag-uae.png" alt="الإمارات" class="img-fluid">
+                        <span>الإمارات</span>
+                    </div>
+                </div>
+                <div class="col-md-2 col-4">
+                    <div class="trust-badge">
+                        <img src="assets/images/flag-qatar.png" alt="قطر" class="img-fluid">
+                        <span>قطر</span>
+                    </div>
+                </div>
+                <div class="col-md-2 col-4">
+                    <div class="trust-badge">
+                        <img src="assets/images/flag-oman.png" alt="عمان" class="img-fluid">
+                        <span>عمان</span>
+                    </div>
+                </div>
+                <div class="col-md-2 col-4">
+                    <div class="trust-badge">
+                        <img src="assets/images/flag-kuwait.png" alt="الكويت" class="img-fluid">
+                        <span>الكويت</span>
+                    </div>
+                </div>
+                <div class="col-md-2 col-4">
+                    <div class="trust-badge">
+                        <img src="assets/images/flag-yemen.png" alt="اليمن" class="img-fluid">
+                        <span>اليمن</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-5" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="mb-4" style="font-weight: 700;">Socotra Go</h5>
+                    <p style="color: #ccc;">وكالة سياحية متخصصة في رحلات جزيرة سقطرى، نقدم خدمات سياحية فريدة ومتميزة.</p>
+                    <div class="social-links">
+                        <a href="#" class="me-3" style="color: white; font-size: 1.3rem;"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#" class="me-3" style="color: white; font-size: 1.3rem;"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="me-3" style="color: white; font-size: 1.3rem;"><i class="bi bi-tiktok"></i></a>
+                        <a href="#" class="me-3" style="color: white; font-size: 1.3rem;"><i class="bi bi-facebook"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-6 mb-4">
+                    <h6 class="mb-3" style="font-weight: 700;">روابط سريعة</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" style="color: #ccc; text-decoration: none;">الرئيسية</a></li>
+                        <li><a href="tours.html" style="color: #ccc; text-decoration: none;">الرحلات</a></li>
+                        <li><a href="packages.html" style="color: #ccc; text-decoration: none;">الباقات</a></li>
+                        <li><a href="attractions.html" style="color: #ccc; text-decoration: none;">الأماكن</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-6 mb-4">
+                    <h6 class="mb-3" style="font-weight: 700;">المزيد</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="reviews.html" style="color: #ccc; text-decoration: none;">آراء العملاء</a></li>
+                        <li><a href="about.html" style="color: #ccc; text-decoration: none;">عن الوكالة</a></li>
+                        <li><a href="contact.html" style="color: #ccc; text-decoration: none;">التواصل</a></li>
+                        <li><a href="book.html" style="color: #ccc; text-decoration: none;">الحجز</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h6 class="mb-3" style="font-weight: 700;">اتصل بنا</h6>
+                    <p style="color: #ccc;"><i class="bi bi-whatsapp me-2"></i> +967 123 456 789</p>
+                    <p style="color: #ccc;"><i class="bi bi-envelope me-2"></i> info@socotrago.com</p>
+                    <p style="color: #ccc;"><i class="bi bi-geo-alt me-2"></i> حديبو، سقطرى، اليمن</p>
+                </div>
+            </div>
+            <hr class="my-4" style="background-color: rgba(255,255,255,0.1);">
+            <div class="text-center">
+                <p class="mb-0" style="color: #aaa;">© 2024 Socotra Go. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // تفعيل نظام النجوم في التقييم
+        document.addEventListener('DOMContentLoaded', function() {
+            // تفعيل نظام النجوم في نموذج إضافة التقييم
+            const stars = document.querySelectorAll('.rating-input i');
+            const ratingInput = document.getElementById('userRating');
+            
+            stars.forEach(star => {
+                star.addEventListener('mouseover', function() {
+                    const rating = this.getAttribute('data-rating');
+                    highlightStars(rating);
+                });
+                
+                star.addEventListener('click', function() {
+                    const rating = this.getAttribute('data-rating');
+                    ratingInput.value = rating;
+                    highlightStars(rating);
+                    
+                    // إضافة كلاس active للنجوم
+                    stars.forEach(s => s.classList.remove('active'));
+                    for (let i = 0; i < rating; i++) {
+                        stars[i].classList.add('active');
+                    }
+                });
+            });
+            
+            function highlightStars(rating) {
+                stars.forEach((star, index) => {
+                    if (index < rating) {
+                        star.style.color = '#ffc107';
+                    } else {
+                        star.style.color = '#ddd';
+                    }
+                });
+            }
+            
+            // تفعيل تصفية التقييمات
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const reviewItems = document.querySelectorAll('.review-item');
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // إزالة النشاط من جميع الأزرار
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // إضافة النشاط للزر المختار
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    
+                    reviewItems.forEach(item => {
+                        if (filter === 'all') {
+                            item.style.display = 'block';
+                        } else if (filter === '5') {
+                            const rating = parseFloat(item.getAttribute('data-rating'));
+                            if (rating === 5) {
+                                item.style.display = 'block';
+                            } else {
+                                item.style.display = 'none';
+                            }
+                        } else if (filter === '4') {
+                            const rating = parseFloat(item.getAttribute('data-rating'));
+                            if (rating >= 4) {
+                                item.style.display = 'block';
+                            } else {
+                                item.style.display = 'none';
+                            }
+                        } else if (filter === 'with-images') {
+                            const hasImages = item.getAttribute('data-images') === 'true';
+                            if (hasImages) {
+                                item.style.display = 'block';
+                            } else {
+                                item.style.display = 'none';
+                            }
+                        }
+                    });
+                });
+            });
+            
+            // تفعيل تأثيرات التمرير
+            const reviewCards = document.querySelectorAll('.review-card');
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            reviewCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(card);
+            });
+            
+            // تأثيرات للرأسية
+            const ratingBox = document.querySelector('.rating-box');
+            const ratingBars = document.querySelector('.rating-bars');
+            
+            if (ratingBox) {
+                ratingBox.style.opacity = '0';
+                ratingBox.style.transform = 'translateX(-30px)';
+                ratingBox.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                
+                setTimeout(() => {
+                    ratingBox.style.opacity = '1';
+                    ratingBox.style.transform = 'translateX(0)';
+                }, 300);
+            }
+            
+            if (ratingBars) {
+                ratingBars.style.opacity = '0';
+                ratingBars.style.transform = 'translateX(30px)';
+                ratingBars.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                
+                setTimeout(() => {
+                    ratingBars.style.opacity = '1';
+                    ratingBars.style.transform = 'translateX(0)';
+                }, 500);
+            }
+        });
+    </script>
+</body>
+</html>

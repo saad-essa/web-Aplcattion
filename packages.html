@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الباقات - Socotra Go</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #20c997;
+            --dark-color: #1a3a5f;
+            --light-color: #f8f9fa;
+            --accent-color: #ff6b35;
+            --adventure-color: #dc3545;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            padding-top: 80px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        /* تحسين شريط التنقل */
+        .navbar {
+            background: linear-gradient(135deg, var(--dark-color) 0%, #2c5282 100%);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .brand-text {
+            color: white;
+            margin-right: 10px;
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            margin: 0 5px;
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .btn-language {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-language:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* تحسين رأس الصفحة */
+        .page-header {
+            background: linear-gradient(rgba(26, 58, 95, 0.85), rgba(26, 58, 95, 0.9)), 
+                        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23f8f9fa' fill-opacity='1' d='M0,224L80,213.3C160,203,320,181,480,186.7C640,192,800,224,960,218.7C1120,213,1280,171,1360,149.3L1440,128L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+        }
+        
+        .page-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .page-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* تحسين قسم الباقات */
+        .packages-page {
+            position: relative;
+        }
+        
+        .package-detail {
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-bottom: 60px;
+            border: 1px solid #e9ecef;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        
+        .package-detail:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+        
+        .package-detail::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        }
+        
+        #adventure::before {
+            background: linear-gradient(90deg, var(--adventure-color) 0%, #ff9a3c 100%);
+        }
+        
+        .package-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+        
+        .package-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 0;
+        }
+        
+        .package-price {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #2c5282 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(13, 110, 253, 0.2);
+        }
+        
+        #adventure .package-price {
+            background: linear-gradient(135deg, var(--adventure-color) 0%, #ff6b35 100%);
+        }
+        
+        .price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            display: block;
+            line-height: 1;
+        }
+        
+        .per-person {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 15px 35px;
+            font-weight: 600;
+            border-radius: 12px;
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(13, 110, 253, 0.3);
+        }
+        
+        .btn-danger {
+            background-color: var(--adventure-color);
+            border: none;
+            padding: 15px 35px;
+            font-weight: 600;
+            border-radius: 12px;
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+        
+        .btn-danger:hover {
+            background-color: #bb2d3b;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(220, 53, 69, 0.3);
+        }
+        
+        /* تحسين الجدول الزمني */
+        .package-timeline {
+            margin: 40px 0;
+            position: relative;
+            padding-right: 30px;
+        }
+        
+        .package-timeline::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+        
+        .timeline-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 30px;
+            position: relative;
+            padding-right: 40px;
+        }
+        
+        .timeline-title::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+        }
+        
+        .timeline-item {
+            margin-bottom: 40px;
+            position: relative;
+            padding-right: 40px;
+        }
+        
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 4px solid var(--primary-color);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .timeline-day {
+            background-color: var(--primary-color);
+            color: white;
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .timeline-content {
+            background-color: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            border-right: 4px solid var(--primary-color);
+        }
+        
+        .timeline-content h5 {
+            color: var(--dark-color);
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .timeline-content p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .timeline-content ul {
+            padding-right: 20px;
+            margin: 0;
+        }
+        
+        .timeline-content li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+        
+        .timeline-content li:before {
+            content: "•";
+            color: var(--secondary-color);
+            font-weight: bold;
+            position: absolute;
+            right: -20px;
+            font-size: 1.5rem;
+        }
+        
+        /* تحسين قسم ما تشمله الباقة */
+        .package-includes {
+            background-color: #f0f7ff;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px 0;
+            border: 1px solid #d1e7ff;
+        }
+        
+        .package-includes h4 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .package-includes h4::before {
+            content: '✓';
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            margin-left: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .package-includes ul {
+            padding-right: 20px;
+            margin: 0;
+        }
+        
+        .package-includes li {
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .package-includes li i {
+            margin-left: 10px;
+            font-size: 1.2rem;
+        }
+        
+        /* تحسين قسم المناسب ل */
+        .package-suitability {
+            margin: 30px 0;
+        }
+        
+        .package-suitability h4 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 15px;
+        }
+        
+        .suitability-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tag {
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .tag-family {
+            background-color: #e7f5ff;
+            color: var(--primary-color);
+            border: 1px solid #b3d9ff;
+        }
+        
+        .tag-couple {
+            background-color: #fff0f6;
+            color: #d63384;
+            border: 1px solid #f8bbd9;
+        }
+        
+        .tag-group {
+            background-color: #f0fff4;
+            color: #198754;
+            border: 1px solid #c3e6cb;
+        }
+        
+        /* تحسين أبرز معالم الباقة */
+        .package-highlights {
+            margin: 40px 0;
+        }
+        
+        .package-highlights h4 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 25px;
+        }
+        
+        .highlight-card {
+            background-color: white;
+            border: 1px solid #e9ecef;
+            border-radius: 15px;
+            padding: 20px 10px;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .highlight-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .highlight-card i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .highlight-card span {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        /* تحسين بطاقات المغامرة */
+        .adventure-features {
+            margin: 40px 0;
+        }
+        
+        .adventure-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px 20px;
+            text-align: center;
+            border: 1px solid #e9ecef;
+            transition: var(--transition);
+            height: 100%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .adventure-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--adventure-color);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .adventure-card i {
+            font-size: 3rem;
+            color: var(--adventure-color);
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .adventure-card h5 {
+            color: var(--dark-color);
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .adventure-card p {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+        
+        /* تحسين متطلبات الباقة */
+        .package-requirements {
+            margin-top: 30px;
+        }
+        
+        .package-requirements h4 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 15px;
+        }
+        
+        .alert-warning {
+            background-color: #fff3cd;
+            border-color: #ffeaa7;
+            color: #856404;
+            border-radius: 12px;
+            padding: 20px;
+            border-right: 5px solid #ffc107;
+        }
+        
+        .alert-warning i {
+            color: #ffc107;
+            margin-left: 10px;
+            font-size: 1.2rem;
+        }
+        
+        /* تحسين جدول المقارنة */
+        .comparison-section {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .comparison-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%230d6efd' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--dark-color);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 50%;
+            transform: translateX(50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border-radius: 2px;
+        }
+        
+        .table {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .table-dark {
+            background: linear-gradient(135deg, var(--dark-color) 0%, #2c5282 100%);
+            border: none;
+        }
+        
+        .table-dark th {
+            border: none;
+            font-weight: 600;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .table tbody tr {
+            transition: var(--transition);
+        }
+        
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .table td {
+            text-align: center;
+            padding: 20px;
+            vertical-align: middle;
+            border-color: #e9ecef;
+        }
+        
+        .table td:first-child {
+            font-weight: 600;
+            color: var(--dark-color);
+            text-align: right;
+        }
+        
+        /* تحسين قسم النداء للعمل */
+        .cta-section {
+            background: linear-gradient(135deg, var(--dark-color) 0%, var(--primary-color) 100%);
+            color: white;
+            border-radius: 20px;
+            margin: 80px auto;
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .cta-section .lead {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        
+        .cta-section .btn-outline-light {
+            border: 2px solid white;
+            color: white;
+            padding: 15px 40px;
+            font-weight: 700;
+            border-radius: 12px;
+            transition: var(--transition);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .cta-section .btn-outline-light:hover {
+            background-color: white;
+            color: var(--primary-color);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* تحسين الفوتر */
+        .footer {
+            background-color: var(--dark-color);
+            color: white;
+            margin-top: 80px;
+        }
+        
+        .footer h5, .footer h6 {
+            color: white;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .footer p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+        }
+        
+        .footer a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer a:hover {
+            color: white;
+            padding-right: 5px;
+        }
+        
+        .footer ul li {
+            margin-bottom: 10px;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        /* تصميم متجاوب */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.2rem;
+            }
+            
+            .package-title {
+                font-size: 1.8rem;
+            }
+            
+            .price {
+                font-size: 2rem;
+            }
+            
+            .package-detail {
+                padding: 25px;
+            }
+            
+            .timeline-content {
+                padding: 20px;
+            }
+            
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+        
+        /* تأثيرات إضافية */
+        .popular-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            z-index: 2;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+        
+        #7days {
+            position: relative;
+        }
+        
+        #7days::after {
+            content: 'الأكثر شعبية';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--accent-color);
+            color: white;
+            padding: 10px 30px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1rem;
+            z-index: 2;
+            box-shadow: 0 5px 20px rgba(255, 107, 53, 0.3);
+        }
+        
+        .best-value {
+            background-color: #fff9e6;
+            border: 2px solid #ffd54f;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="assets/images/logo.png" alt="Socotra Go Logo" height="50">
+                <span class="brand-text">Socotra Go</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">الرئيسية</a></li>
+                    <li class="nav-item"><a class="nav-link" href="tours.html">الرحلات</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="packages.html">الباقات</a></li>
+                    <li class="nav-item"><a class="nav-link" href="attractions.html">الأماكن</a></li>
+                    <li class="nav-item"><a class="nav-link" href="reviews.html">آراء العملاء</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">عن الوكالة</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">التواصل</a></li>
+                    <li class="nav-item"><a class="btn btn-outline-light me-2" href="book.html">احجز الآن</a></li>
+                    <li class="nav-item">
+                        <button class="btn btn-sm btn-language" id="langSwitch">EN</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title" data-aos="fade-down">باقات سقطرى السياحية</h1>
+            <p class="page-subtitle" data-aos="fade-up" data-aos-delay="200">اختر الباقة المناسبة واستمتع برحلة لا تنسى في جزيرة الأساطير والطبيعة الفريدة</p>
+        </div>
+    </section>
+
+    <!-- Packages Section -->
+    <section class="packages-page py-5">
+        <div class="container">
+            <!-- Package 1 -->
+            <div class="package-detail" id="5days" data-aos="fade-up">
+                <div class="row align-items-center mb-4">
+                    <div class="col-md-8">
+                        <h2 class="package-title">🌅 باقة 5 أيام – اكتشاف سقطرى</h2>
+                        <p class="package-subtitle">رحلة استكشافية شاملة لأهم معالم سقطرى المميزة</p>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <div class="package-price">
+                            <span class="price">650$</span>
+                            <span class="per-person">للشخص</span>
+                        </div>
+                        <a href="book.html?package=5days" class="btn btn-primary btn-lg mt-3">
+                            <i class="bi bi-calendar-check me-2"></i>احجز الآن
+                        </a>
+                    </div>
+                </div>
+
+                <div class="package-timeline">
+                    <h4 class="timeline-title">برنامج الرحلة التفصيلي</h4>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-day">اليوم الأول</div>
+                            <div class="timeline-content">
+                                <h5>الاستقبال - زيارة دكسم</h5>
+                                <p>استقبال في مطار سقطرى، نقل إلى الفندق، ثم زيارة لوادي دكسم الشهير ومشاهدة أشجار دم الأخوين.</p>
+                                <ul>
+                                    <li>الاستقبال في مطار سقطرى</li>
+                                    <li>نقل إلى الفندق في حديبو</li>
+                                    <li>زيارة وادي دكسم</li>
+                                    <li>عشاء ترحيبي</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-day">اليوم الثاني</div>
+                            <div class="timeline-content">
+                                <h5>شاطئ عيق</h5>
+                                <p>رحلة كاملة إلى شاطئ عيق، أحد أجمل شواطئ العالم، مع أنشطة بحرية وسباحة.</p>
+                                <ul>
+                                    <li>الإفطار في الفندق</li>
+                                    <li>رحلة إلى شاطئ عيق</li>
+                                    <li>غداء على الشاطئ</li>
+                                    <li>أنشطة بحرية</li>
+                                    <li>العودة للمبيت</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-day">اليوم الثالث</div>
+                            <div class="timeline-content">
+                                <h5>قلنسية</h5>
+                                <p>زيارة لمدينة قلنسية الساحلية ورحلة بالقوارب إلى الشواطئ الذهبية.</p>
+                                <ul>
+                                    <li>الإفطار</li>
+                                    <li>رحلة إلى قلنسية</li>
+                                    <li>رحلة بالقارب</li>
+                                    <li>غداء بحري طازج</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-day">اليوم الرابع</div>
+                            <div class="timeline-content">
+                                <h5>كهف حوق</h5>
+                                <p>استكشاف كهف حوق الأثري مع نقوشه القديمة، ثم زيارة لمحمية دي حمري.</p>
+                                <ul>
+                                    <li>الإفطار</li>
+                                    <li>رحلة إلى كهف حوق</li>
+                                    <li>زيارة محمية دي حمري</li>
+                                    <li>غداء تقليدي</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-day">اليوم الخامس</div>
+                            <div class="timeline-content">
+                                <h5>العودة</h5>
+                                <p>وقت حر للتسوق والتحضير للرحيل، ثم نقل إلى المطار.</p>
+                                <ul>
+                                    <li>الإفطار</li>
+                                    <li>وقت حر للتسوق</li>
+                                    <li>نقل إلى المطار</li>
+                                    <li>توديع</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="package-includes">
+                    <h4>ما تشمله الباقة:</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul>
+                                <li><i class="bi bi-check-circle-fill text-success"></i> الإقامة 4 ليالي في فندق 3 نجوم</li>
+                                <li><i class="bi bi-check-circle-fill text-success"></i> جميع الوجبات (إفطار، غداء، عشاء)</li>
+                                <li><i class="bi bi-check-circle-fill text-success"></i> جميع التنقلات الداخلية</li>
+                                <li><i class="bi bi-check-circle-fill text-success"></i> مرشد سياحي متخصص</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul>
+                                <li><i class="bi bi-check-circle-fill text-success"></i> جميع رسوم الدخول للمواقع</li>
+                                <li><i class="bi bi-check-circle-fill text-success"></i> مياه ومشروبات خلال الرحلات</li>
+                                <li><i class="bi bi-check-circle-fill text-success"></i> صور تذكارية</li>
+                                <li><i class="bi bi-check-circle-fill text-success"></i> تذكار تقليدي من سقطرى</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="package-suitability">
+                    <h4>المناسب ل:</h4>
+                    <div class="suitability-tags">
+                        <span class="tag tag-family">الأفراد والعائلات</span>
+                        <span class="tag tag-couple">الأزواج</span>
+                        <span class="tag tag-group">المجموعات الصغيرة</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 2 - الأكثر شعبية -->
+            <div class="package-detail best-value" id="7days" data-aos="fade-up" data-aos-delay="100">
+                <div class="row align-items-center mb-4">
+                    <div class="col-md-8">
+                        <h2 class="package-title">🏝️ باقة 7 أيام – سقطرى الشاملة</h2>
+                        <p class="package-subtitle">تجربة شاملة لكل ما تقدمه سقطرى من جمال وطبيعة فريدة</p>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <div class="package-price">
+                            <span class="price">950$</span>
+                            <span class="per-person">للشخص</span>
+                        </div>
+                        <a href="book.html?package=7days" class="btn btn-primary btn-lg mt-3">
+                            <i class="bi bi-star-fill me-2"></i>الباقة الأفضل
+                        </a>
+                    </div>
+                </div>
+
+                <div class="package-highlights">
+                    <h4>أبرز معالم الباقة:</h4>
+                    <div class="row g-3">
+                        <div class="col-md-3 col-6">
+                            <div class="highlight-card text-center">
+                                <i class="bi bi-house-door"></i>
+                                <span>إقامة 6 ليالي</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="highlight-card text-center">
+                                <i class="bi bi-map"></i>
+                                <span>زيارة 15 موقع</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="highlight-card text-center">
+                                <i class="bi bi-cup-hot"></i>
+                                <span>وجبات مميزة</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="highlight-card text-center">
+                                <i class="bi bi-person-check"></i>
+                                <span>مرشد خاص</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="package-includes">
+                    <h4>زيادة على باقة 5 أيام:</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul>
+                                <li><i class="bi bi-plus-circle-fill text-primary"></i> زيارة شاطئ أرك وجزيرة سمحة</li>
+                                <li><i class="bi bi-plus-circle-fill text-primary"></i> رحلة تخييم في الصحراء ليلة واحدة</li>
+                                <li><i class="bi bi-plus-circle-fill text-primary"></i> جلسة تصوير احترافية في المواقع</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul>
+                                <li><i class="bi bi-plus-circle-fill text-primary"></i> تذكار تقليدي من سقطرى</li>
+                                <li><i class="bi bi-plus-circle-fill text-primary"></i> رحلة غوص سطحي (سنوركلينج)</li>
+                                <li><i class="bi bi-plus-circle-fill text-primary"></i> عشاء تحت النجوم</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="package-suitability">
+                    <h4>مميزات إضافية:</h4>
+                    <div class="suitability-tags">
+                        <span class="tag tag-family" style="background-color: #e3f2fd; color: #1565c0;">تصوير احترافي</span>
+                        <span class="tag tag-couple" style="background-color: #f3e5f5; color: #7b1fa2;">تخييم صحراوي</span>
+                        <span class="tag tag-group" style="background-color: #e8f5e8; color: #2e7d32;">غوص سطحي</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 3 -->
+            <div class="package-detail" id="adventure" data-aos="fade-up" data-aos-delay="200">
+                <div class="row align-items-center mb-4">
+                    <div class="col-md-8">
+                        <h2 class="package-title">🧗 باقة المغامرين المتطورة</h2>
+                        <p class="package-subtitle">لتحدي الطبيعة والاستمتاع بالمغامرات الاستثنائية في سقطرى</p>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <div class="package-price">
+                            <span class="price">1200$</span>
+                            <span class="per-person">للشخص</span>
+                        </div>
+                        <a href="book.html?package=adventure" class="btn btn-danger btn-lg mt-3">
+                            <i class="bi bi-lightning-charge-fill me-2"></i>احجز المغامرة
+                        </a>
+                    </div>
+                </div>
+
+                <div class="adventure-features">
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="adventure-card">
+                                <i class="bi bi-tree"></i>
+                                <h5>تسلق الجبال</h5>
+                                <p>تسلق قمم جبال سقطرى لمشاهدة المناظر البانورامية الفريدة</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="adventure-card">
+                                <i class="bi bi-tent"></i>
+                                <h5>تخييم صحراوي</h5>
+                                <p>ليلة كاملة تحت النجوم في الصحراء السقطرية مع عشاء تقليدي</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="adventure-card">
+                                <i class="bi bi-water"></i>
+                                <h5>غوص حر</h5>
+                                <p>استكشاف الحياة البحرية في مناطق الغوص البكر بشمال سقطرى</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="package-includes">
+                    <h4>مميزات خاصة:</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul>
+                                <li><i class="bi bi-award-fill text-warning"></i> معدات مغامرة متخصصة</li>
+                                <li><i class="bi bi-award-fill text-warning"></i> مرشد مغامرات محترف</li>
+                                <li><i class="bi bi-award-fill text-warning"></i> تأمين سفر شامل</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul>
+                                <li><i class="bi bi-award-fill text-warning"></i> شهادة مشاركة في المغامرة</li>
+                                <li><i class="bi bi-award-fill text-warning"></i> فيلم تذكاري للمغامرة</li>
+                                <li><i class="bi bi-award-fill text-warning"></i> حقيبة مغامرات هدايا</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="package-requirements">
+                    <h4>متطلبات الباقة:</h4>
+                    <div class="alert alert-warning">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        هذه الباقة تتطلب لياقة بدنية جيدة وتصلح للمغامرين فقط. يجب إحضار ملابس ومعدات مناسبة للمغامرة. الحد الأدنى للعمر 18 سنة.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section class="comparison-section py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">مقارنة بين الباقات</h2>
+            <div class="table-responsive" data-aos="fade-up">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th style="width: 25%;">الميزة</th>
+                            <th style="width: 25%;" class="text-center">باقة 5 أيام</th>
+                            <th style="width: 25%;" class="text-center">باقة 7 أيام</th>
+                            <th style="width: 25%;" class="text-center">باقة المغامرين</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>عدد الأيام</strong></td>
+                            <td class="text-center">5 أيام / 4 ليالي</td>
+                            <td class="text-center">7 أيام / 6 ليالي</td>
+                            <td class="text-center">7 أيام / 6 ليالي</td>
+                        </tr>
+                        <tr>
+                            <td><strong>السعر للشخص</strong></td>
+                            <td class="text-center"><span class="badge bg-primary">650$</span></td>
+                            <td class="text-center"><span class="badge bg-success">950$</span></td>
+                            <td class="text-center"><span class="badge bg-danger">1200$</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>عدد المواقع</strong></td>
+                            <td class="text-center">8 مواقع</td>
+                            <td class="text-center">15 موقع</td>
+                            <td class="text-center">12 موقع + أنشطة</td>
+                        </tr>
+                        <tr>
+                            <td><strong>التخييم</strong></td>
+                            <td class="text-center"><i class="bi bi-x-circle text-danger fs-5"></i></td>
+                            <td class="text-center"><i class="bi bi-check-circle text-success fs-5"></i> ليلة واحدة</td>
+                            <td class="text-center"><i class="bi bi-check-circle text-success fs-5"></i> ليلتان</td>
+                        </tr>
+                        <tr>
+                            <td><strong>الغوص والأنشطة المائية</strong></td>
+                            <td class="text-center">سباحة فقط</td>
+                            <td class="text-center">سنوركلينج</td>
+                            <td class="text-center">غوص حر + أنشطة متطورة</td>
+                        </tr>
+                        <tr>
+                            <td><strong>اللياقة المطلوبة</strong></td>
+                            <td class="text-center"><span class="badge bg-info">متوسطة</span></td>
+                            <td class="text-center"><span class="badge bg-info">متوسطة</span></td>
+                            <td class="text-center"><span class="badge bg-warning text-dark">عالية</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>التصوير</strong></td>
+                            <td class="text-center">صور عادية</td>
+                            <td class="text-center">جلسة تصوير احترافية</td>
+                            <td class="text-center">فيلم تذكاري</td>
+                        </tr>
+                        <tr>
+                            <td><strong>التأمين</strong></td>
+                            <td class="text-center">أساسي</td>
+                            <td class="text-center">متقدم</td>
+                            <td class="text-center">شامل</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking CTA -->
+    <section class="cta-section py-5" data-aos="zoom-in">
+        <div class="container text-center">
+            <h2 class="mb-4">لا تجد الباقة المناسبة لرحلتك؟</h2>
+            <p class="lead mb-4">فريقنا سيصمم لك باقة سياحية مخصصة تناسب ميزانيتك، توقيتك، وتفضيلاتك الشخصية</p>
+            <a href="contact.html" class="btn btn-outline-light btn-lg me-3">
+                <i class="bi bi-chat-dots me-2"></i>اطلب باقة مخصصة
+            </a>
+            <a href="tel:+967123456789" class="btn btn-light btn-lg">
+                <i class="bi bi-telephone me-2"></i>اتصل للاستشارة
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="mb-4">Socotra Go</h5>
+                    <p>وكالة سياحية متخصصة في رحلات جزيرة سقطرى، نقدم خدمات سياحية فريدة ومتميزة بفريق من المرشدين المحليين ذوي الخبرة.</p>
+                    <div class="social-links">
+                        <a href="#" class="me-3"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#" class="me-3"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="me-3"><i class="bi bi-tiktok"></i></a>
+                        <a href="#" class="me-3"><i class="bi bi-facebook"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-6 mb-4">
+                    <h6 class="mb-3">روابط سريعة</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="tours.html">الرحلات</a></li>
+                        <li><a href="packages.html">الباقات</a></li>
+                        <li><a href="attractions.html">الأماكن</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-6 mb-4">
+                    <h6 class="mb-3">المزيد</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="reviews.html">آراء العملاء</a></li>
+                        <li><a href="about.html">عن الوكالة</a></li>
+                        <li><a href="contact.html">التواصل</a></li>
+                        <li><a href="book.html">الحجز</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h6 class="mb-3">اتصل بنا</h6>
+                    <p><i class="bi bi-whatsapp me-2"></i> +967 123 456 789</p>
+                    <p><i class="bi bi-envelope me-2"></i> info@socotrago.com</p>
+                    <p><i class="bi bi-geo-alt me-2"></i> حديبو، سقطرى، اليمن</p>
+                    <p class="mt-3"><small>نعمل يومياً من الساعة 8 صباحاً حتى 8 مساءً</small></p>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">© 2024 Socotra Go. جميع الحقوق محفوظة. | صمم بحب لسقطرى</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+        
+        // Highlight best value package
+        document.addEventListener('DOMContentLoaded', function() {
+            const bestValuePackage = document.getElementById('7days');
+            if (bestValuePackage) {
+                bestValuePackage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+            
+            // Language switcher simulation
+            document.getElementById('langSwitch').addEventListener('click', function() {
+                const currentLang = this.textContent;
+                this.textContent = currentLang === 'EN' ? 'AR' : 'EN';
+                alert('سيتم توجيهك إلى النسخة الإنجليزية من الموقع');
+            });
+            
+            // Smooth scroll to package when URL has hash
+            if (window.location.hash) {
+                const targetPackage = document.querySelector(window.location.hash);
+                if (targetPackage) {
+                    setTimeout(() => {
+                        targetPackage.scrollIntoView({ behavior: 'smooth' });
+                    }, 300);
+                }
+            }
+        });
+        
+        // Share package function
+        function sharePackage(packageName) {
+            const shareText = `تفضل بزيارة باقة ${packageName} في سقطرى مع Socotra Go!`;
+            const shareUrl = window.location.href;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: packageName,
+                    text: shareText,
+                    url: shareUrl,
+                });
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                const fullText = `${shareText} ${shareUrl}`;
+                prompt('انسخ الرابط للمشاركة:', fullText);
+            }
+        }
+    </script>
+</body>
+</html>
